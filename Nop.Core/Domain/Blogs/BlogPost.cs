@@ -8,6 +8,7 @@ namespace Nop.Core.Domain.Blogs
 {
     public class BlogPost : BaseEntity
     {
+        public int LanguageId { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
         public string BodyOverview { get; set; }

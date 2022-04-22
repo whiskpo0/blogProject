@@ -9,7 +9,7 @@
     @foreach (var item in Model.BlogPosts)
     {
         <li>@item.Id</li>
-        <li>@item.Title</li>
+        <li><a href="@Url.RouteUrl("BlogPost",)">@item.Title</a></li>
         <li>@item.CreatedOn.ToString("D")</li>
         <li>@item.BodyOverview</li>
         <li>
