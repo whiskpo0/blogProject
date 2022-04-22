@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nop.Data;
+using Nop.Data.DbContexts;
 using Nop.Service.Blogs;
 using Nop.Service.Helpers;
 using Nop.Web.Factories;
@@ -28,6 +30,10 @@ namespace Nop.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<CoreDbContexts>(options => options.UseSqlServer(Configuration.GetConnectionString("CoreConnection")));
+
             services.AddScoped<IDateTimeHelper, DateTimeHelper>();
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IBlogModelFactory, BlogModelFactory>();

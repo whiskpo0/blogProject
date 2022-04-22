@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Data.DbContexts;
 using Nop.Web.Factories;
 using Nop.Web.Models.Blogs;
 using System;
@@ -12,16 +13,22 @@ namespace Nop.Web.Controllers
     {
 
         private readonly IBlogModelFactory _blogModelFactory;
+        private readonly CoreDbContexts _db;
 
-        public BlogController(IBlogModelFactory blogModelFactory)
+        public BlogController(CoreDbContexts db,
+            IBlogModelFactory blogModelFactory) 
         {
+            _db = db;
             _blogModelFactory = blogModelFactory;
         }
 
 
         public virtual async Task<IActionResult> List(BlogPagingFilteringModel command)
         {
+            //var model = await _db.BlogPost.ToListAsync(); 
+            
             var model = await _blogModelFactory.PrepareBlogPostListModelAsync(command);
+
 
             return View("List", model); 
         }
