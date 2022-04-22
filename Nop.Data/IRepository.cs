@@ -9,6 +9,6 @@ namespace Nop.Data
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-
+        Task<IList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null, bool includeDeleted = true);
     }
 }

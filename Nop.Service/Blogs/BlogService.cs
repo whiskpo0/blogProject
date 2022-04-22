@@ -1,4 +1,5 @@
 ﻿using Nop.Core.Domain.Blogs;
+using Nop.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,20 @@ namespace Nop.Service.Blogs
 {
     public class BlogService : IBlogService
     {
-        public Task<IList<BlogPost>> GetAllBlogPostsAsync(DateTime? dateFrom = null, DateTime? dateTo = null)
+        private readonly IRepository<BlogPost> _blogPostRepository;
+
+        public BlogService(IRepository<BlogPost> blogPostRepository)
         {
-            throw new NotImplementedException();
+            _blogPostRepository = blogPostRepository;
+        }
+        public async Task<IList<BlogPost>> GetAllBlogPostsAsync(DateTime? dateFrom = null, DateTime? dateTo = null)
+        {
+            return await _blogPostRepository.GetAllPagedAsync(async query =>
+            {
+                query = query.OrderByDescending(b => b.StartDateUtc ?? b.CreatedOnUtc);
+
+                return query; 
+            });
         }
 
         public Task<IList<BlogPost>> GetAllBlogPostsByTagAsync(string tag = "")
