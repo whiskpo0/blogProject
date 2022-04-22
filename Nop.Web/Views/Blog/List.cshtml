@@ -1,0 +1,27 @@
+﻿@model Nop.Web.Models.Blogs.BlogPostListModel
+
+@{
+    ViewData["Title"] = "Blog Page";
+}
+
+
+<ul>
+    @foreach (var item in Model.BlogPosts)
+    {
+        <li>@item.Id</li>
+        <li>@item.Title</li>
+        <li>@item.CreatedOn.ToString("D")</li>
+        <li>@item.BodyOverview</li>
+        <li>
+            <ul>
+                Tags:
+                @for (int i = 0; i < item.Tags.Count; i++)
+                {
+                    var tag = item.Tags[i];
+                    <li>@tag</li>
+                }
+            </ul>
+        </li>
+        <br />
+    }
+</ul>
